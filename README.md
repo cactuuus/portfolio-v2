@@ -26,8 +26,12 @@ There isn't much more to say. Here is a list of technologies I have used to buil
 
 It is a bit overkill for a simple portfolio, but I wanted to play around with APIs and make it a bit more interesting than a static page.
 
----
+### Forking
 
 If you stumbled upon this and want to use it for yourself, feel free to fork it and make it your own.
 
 Shoot me a message if you have any questions!
+
+### License
+
+The code is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. This of course does not apply to personal content (such as name, bio, resume, photos, project descriptions), which is not covered and remains mine.
