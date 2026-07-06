@@ -13,51 +13,51 @@
 
 ## Components
 
-- [] Profile
-- [] ProjectCard
-- [] Footer
-- [] ProjectList
-- [] LeetcodeStats
+- [x] Profile
+- [x] ProjectCard
+- [x] Footer
+- [x] ProjectList
+- [x] LeetcodeStats
 - [] GithubStats
 - [] UptimeStatus
 
 ## Interfaces
 
-- [] Link {
-  icon: string,
-  name: string,
-  url: string
-  openInNewTab: boolean,
-  }
-- [] Profile {
-  name: string,
-  bio: string,
-  links: Link[]
-  }
-- LeetcodeStats {
-  solved: number,
-  total: number,
-  streak: number,
-  thisYearSolved: number,
-  activity: {
-  date: Date,
-  solved: number
-  }[]
-  }
-- GithubStats {
+- [x] Link {
+      icon: string,
+      name: string,
+      url: string
+      openInNewTab: boolean,
+      }
+- [x] Profile {
+      name: string,
+      bio: string,
+      links: Link[]
+      }
+- [x] LeetcodeStats {
+      solved: number,
+      total: number,
+      streak: number,
+      thisYearSolved: number,
+      activity: {
+      date: Date,
+      solved: number
+      }[]
+      }
+- [] GithubStats {
   // not sure yet, depends on what I can actually fetch (activity, language stats, etc.)
   }
 - [] UptimeStatus {
   status: "up" | "down" | "unknown",
-  uptime: number,
-  lastChecked: Date
+  uptime: number
+  // not sure yet, depends on what I can actually fetch (uptime, response time, etc.)
   }
-- [] Project {
-  slug: string,
-  name: string,
-  previewImage?: string,
-  description: string, // using markdown formatting
-  links: Link[]
-  tags: string[],
-  apiwatchId?: string
-  }
+- [x] Project {
+      slug: string,
+      name: string,
+      previewImage?: string,
+      description: string, // using markdown formatting
+      links: Link[]
+      tags: string[],
+      apiwatchId?: string
+      }

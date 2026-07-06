@@ -23,6 +23,7 @@ There isn't much more to say. Here is a list of technologies I have used to buil
 - [DaisyUI](https://daisyui.com/)
 - [TailwindCSS](https://tailwindcss.com/)
 - [Bun](https://bun.sh/)
+- [Unplugin-Icons](https://github.com/unplugin/unplugin-icons)
 
 It is a bit overkill for a simple portfolio, but I wanted to play around with APIs and make it a bit more interesting than a static page.
 
