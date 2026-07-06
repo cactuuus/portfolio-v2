@@ -93,17 +93,23 @@ export interface Project {
 
 /**
  * GithubRepoStats defines the data used to represent the statistics of a GitHub repository.
- * TODO -- I yet have to figure out what data I want to display here, so this is just a placeholder for now.
  * - stars: The number of stars the repository has.
  * - forks: The number of forks the repository has.
- * - watchers: The number of watchers the repository has.
+ * - openIssuesAndPRs: The number of open issues and pull requests the repository has.
+ * - pushedAt: The date and time of the last push to the repository.
+ * - createdAt: The date and time the repository was created.
+ * - archived: A boolean indicating if the repository is archived.
+ * - license: The license of the repository, if any.
+ * - private: A boolean indicating if the repository is private.
  */
 export interface GithubRepoStats {
 	stars: number;
 	forks: number;
+	openIssuesAndPRs: number;
 	pushedAt: string;
+	createdAt: string;
 	archived: boolean;
-	//...
+	license: string | null;
 }
 
 /**

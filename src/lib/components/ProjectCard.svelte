@@ -6,17 +6,26 @@
 	import NormalLink from './NormalLink.svelte';
 	import CopyableCommand from './CopyableCommand.svelte';
 	import StarIcon from '~icons/lucide/star';
+	import GitForkIcon from '~icons/lucide/git-fork';
+	import CircleDotIcon from '~icons/lucide/circle-dot';
 
 	let {
 		project,
 		uptimeStatus,
-		githubStats
-	}: { project: Project; uptimeStatus?: UptimeStatus; githubStats?: GithubRepoStats } = $props();
+		githubStats,
+		githubLoaded
+	}: {
+		project: Project;
+		uptimeStatus?: UptimeStatus;
+		githubStats?: GithubRepoStats;
+		githubLoaded: boolean;
+	} = $props();
 
+	// Derived state for the "last updated" label, used to handle errors gracefully.
 	const updatedAtLabel = $derived.by<string>(() => {
-		if (!githubStats) return 'loading activity data...';
+		if (!githubStats) return 'last updated <unknown>';
 		try {
-			if (githubStats.archived) return 'archived';
+			if (githubStats?.archived) return 'archived';
 			else return `last updated ${relativeTime(githubStats.pushedAt)}`;
 		} catch (e) {
 			console.error('Error parsing date:', e);
@@ -66,13 +75,13 @@
 						</span>
 					{:else}
 						<div
-							class="tooltip tooltip-info tooltip-left tooltip-start cursor-help"
-							aria-label="Uptime is not applicable to this project"
+							class="tooltip tooltip-info tooltip-left tooltip-start"
+							aria-label="Uptime tracking is not applicable to this project"
 						>
-							<div class="tooltip-content max-w-50">
-								<span>Uptime is not applicable to this project</span>
+							<div class="tooltip-content max-w-60">
+								<span>Uptime tracking is not applicable to this project</span>
 							</div>
-							<span class="text-faint"> N/A </span>
+							<span class="text-faint pointer-events-none">N/A</span>
 						</div>
 					{/if}
 				</div>
@@ -105,7 +114,7 @@
 		</div>
 
 		{#if project.ghRepoName}
-			<div class="flex items-baseline gap-3 flex-wrap">
+			<div class="flex items-baseline gap-3 flex-wrap text-faint">
 				<NormalLink
 					link={{
 						label: 'GitHub',
@@ -114,12 +123,45 @@
 						ownAsset: false
 					}}
 				/>
-				<span class="flex text-xs items-baseline gap-1 text-faint">
-					<StarIcon class="h-3 w-3 translate-y-0.5" />
-					{githubStats?.stars ?? '--'}
-				</span>
-				<div class="text-faint text-2xs grow text-right">
-					<span class:animate-pulse={githubStats === undefined}>{updatedAtLabel}</span>
+				<div class="grow flex justify-end gap-2 items-baseline">
+					{#if githubStats}
+						<div
+							class="tooltip tooltip-info flex text-2xs items-baseline gap-1"
+							aria-label="GitHub Stars"
+						>
+							<div class="tooltip-content">
+								<span>GitHub Stars</span>
+							</div>
+							<StarIcon class="h-2 w-2" />
+							<span class="pointer-events-none">{githubStats.stars}</span>
+						</div>
+						<div
+							class="tooltip tooltip-info flex text-2xs items-baseline gap-1"
+							aria-label="GitHub Forks"
+						>
+							<div class="tooltip-content">
+								<span>GitHub Forks</span>
+							</div>
+							<GitForkIcon class="h-2 w-2" />
+							<span class="pointer-events-none">{githubStats.forks}</span>
+						</div>
+						<div
+							class="tooltip tooltip-info flex text-2xs items-baseline gap-1"
+							aria-label="Open Issues and Pull Requests"
+						>
+							<div class="tooltip-content max-w-50">
+								<span>Open Issues and Pull Requests</span>
+							</div>
+							<CircleDotIcon class="h-2 w-2" />
+							<span class="pointer-events-none">{githubStats.openIssuesAndPRs}</span>
+						</div>
+						<span class="text-2xs ml-2">{updatedAtLabel}</span>
+					{:else if !githubLoaded}
+						<span class="text-2xs animate-pulse">loading...</span>
+					{:else}
+						<!-- if loaded and still missing data, show error -->
+						<span class="text-2xs text-error">&lt;failed to load GitHub data&gt;</span>
+					{/if}
 				</div>
 			</div>
 		{/if}

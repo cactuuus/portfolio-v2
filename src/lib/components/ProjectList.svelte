@@ -3,22 +3,31 @@
 	import ProjectCard from './ProjectCard.svelte';
 
 	let { projects }: { projects: Project[] } = $props();
-	const githubStats = $state<Record<string, GithubRepoStats>>({});
-	const uptimeStats = $state<Record<string, UptimeStatus>>({});
+	const MIN_LOADING_TIME = 800; // ms
+
+	let githubStats = $state<Record<string, GithubRepoStats>>({});
+	let githubLoaded = $state(false);
+
+	let uptimeStats = $state<Record<string, UptimeStatus>>({});
 
 	$effect(() => {
 		// TODO -- fetch github and api data, inject into project component
-		// TEMP MOCK DATA
+		const startedAt = Date.now();
+		fetch('/api/github')
+			.then((r) => (r.ok ? r.json() : Promise.reject()))
+			.then(async (data: Record<string, GithubRepoStats>) => {
+				const elapsed = Date.now() - startedAt;
+				if (elapsed < MIN_LOADING_TIME) {
+					await new Promise((r) => setTimeout(r, MIN_LOADING_TIME - elapsed));
+				}
+				githubStats = data;
+				githubLoaded = true;
+			})
+			.catch(() => {});
+
+		// TEMP MOCK DATA FOR APIWATCH
 		projects.forEach(async (project) => {
 			await new Promise((resolve) => setTimeout(resolve, Math.random() * 1000));
-			githubStats[project.slug] = {
-				stars: Math.floor(Math.random() * 1000),
-				forks: Math.floor(Math.random() * 100),
-				pushedAt: new Date(
-					new Date().setDate(new Date().getDate() - Math.floor(Math.random() * 100))
-				).toISOString(),
-				archived: Math.random() > 0.8
-			};
 			uptimeStats[project.slug] = {
 				up: Math.random() > 0.5,
 				uptime: Math.floor(Math.random() * 10000) / 100
@@ -35,6 +44,7 @@
 				{project}
 				uptimeStatus={uptimeStats[project.slug]}
 				githubStats={githubStats[project.slug]}
+				{githubLoaded}
 			/>
 		{/each}
 	</div>
