@@ -5,7 +5,7 @@
 
 <p align="center">
     <a href="https://jacopocalvi.com">
-        <img src="https://img.shields.io/badge/available_here-blueviolet?logo=netlify" alt="Website" />
+        <img src="https://img.shields.io/badge/self--hosted-blueviolet?logo=coolify" alt="Website" />
     </a>
     <a href="https://apiwatch.eu/status/6fb0f36e-42be-446c-b995-80dd03cf4c02">
         <img src="https://img.shields.io/website?url=http%3A//jacopocalvi.com&label=status&up_message=online&up_color=brightgreen&down_message=offline&down_color=red" alt="Status" />
