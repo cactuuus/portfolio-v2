@@ -16,7 +16,7 @@ interface RawMatchedUser {
 }
 
 // Response shape from LeetCode's API
-interface RawResponse {
+interface RawLeetcodeResponse {
 	data: {
 		allQuestionsCount: CountEntry[];
 		matchedUser: RawMatchedUser | null;
@@ -49,8 +49,8 @@ export async function fetchLeetcodeStats(handle: string): Promise<LeetcodeStats>
 		headers: { 'Content-Type': 'application/json', Referer: 'https://leetcode.com' },
 		body: JSON.stringify({ query: QUERY, variables: { handle, y1: year, y2: year - 1 } })
 	});
-	if (!res.ok) throw new Error(`leetcode fetch failed: ${res.status}`);
-	const json = (await res.json()) as RawResponse;
+	if (!res.ok) throw new Error(`LeetCode API fetch failed: ${res.status}`);
+	const json = (await res.json()) as RawLeetcodeResponse;
 	return parseLeetcodeResponse(json.data);
 }
 
@@ -60,7 +60,7 @@ export async function fetchLeetcodeStats(handle: string): Promise<LeetcodeStats>
  * @returns The parsed LeetcodeStats object.
  * @throws An error if the matched user data is missing from the response.
  */
-export function parseLeetcodeResponse(data: RawResponse['data']): LeetcodeStats {
+export function parseLeetcodeResponse(data: RawLeetcodeResponse['data']): LeetcodeStats {
 	if (!data.matchedUser) throw new Error('No matched user in response');
 	const user = data.matchedUser;
 	const count = (arr: CountEntry[], d: CountEntry['difficulty']) => {

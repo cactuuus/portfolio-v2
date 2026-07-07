@@ -11,26 +11,25 @@ const TTL = 20 * 60 * 1000; // 20 mins
 export async function GET() {
 	const cached = getCached<Record<string, GithubRepoStats>>(`github:repos-stats`);
 	if (cached) return json(cached);
+	try {
+		const stats: Record<string, GithubRepoStats> = {};
+		const withRepo = projects.filter((project) => project.ghRepoName !== undefined);
 
-	const stats: Record<string, GithubRepoStats> = {};
-	const withRepo = projects.filter((project) => project.ghRepoName !== undefined);
-
-	const responses = await Promise.allSettled(
-		withRepo.map((project) => fetchGithubRepoStats(GITHUB_USERNAME, project.ghRepoName!))
-	);
-
-	for (const [i, res] of responses.entries()) {
-		// ignore unsuccessful fetches, but log them for debugging
-		if (res.status === 'fulfilled') {
-			stats[withRepo[i].slug] = res.value;
-		} else {
-			console.error(`Failed to fetch stats for project "${withRepo[i].slug}":`, res.reason);
+		const responses = await Promise.allSettled(
+			withRepo.map((project) => fetchGithubRepoStats(GITHUB_USERNAME, project.ghRepoName!))
+		);
+		for (const [i, res] of responses.entries()) {
+			// ignore unsuccessful fetches, but log them for debugging
+			if (res.status === 'fulfilled') {
+				stats[withRepo[i].slug] = res.value;
+			} else {
+				console.error(`Failed to fetch stats for project "${withRepo[i].slug}":`, res.reason);
+			}
 		}
+		setCached(`github:repos-stats`, stats, TTL);
+		return json(stats);
+	} catch (e) {
+		console.error('Failed to fetch GitHub repos stats: ', e);
+		return json({ error: 'unavailable' }, { status: 502 });
 	}
-
-	console.debug('Fetched GitHub stats for %d projects', withRepo.length);
-	console.debug('Stats:', stats);
-
-	setCached(`github:repos-stats`, stats, TTL);
-	return json(stats);
 }

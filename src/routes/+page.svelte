@@ -7,7 +7,9 @@
 	import { projects } from '$lib/data/projects';
 </script>
 
-<main class="mx-auto max-w-md sm:max-w-5xl px-2 sm:px-4 py-16 gap-2 sm:gap-4 flex flex-col">
+<main
+	class="mx-auto max-w-xl md:max-w-5xl px-2 md:px-4 pt-2 pb-0 md:pt-10 md:pb-4 gap-2 md:gap-4 flex flex-col"
+>
 	<Profile {profile} />
 	<LeetcodeStats />
 	<div class="divider my-0"></div>

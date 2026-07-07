@@ -42,7 +42,7 @@
 </script>
 
 <div>
-	<h3 class="text-xl font-bold font-mono mb-4 px-2">Personal Projects</h3>
+	<h3 class="text-xl font-bold font-mono mb-4 px-2 text-center">Personal Projects</h3>
 	<div class="flex flex-col gap-8">
 		{#each projects as project (project.slug)}
 			<ProjectCard

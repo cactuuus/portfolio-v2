@@ -16,7 +16,7 @@
 </script>
 
 <div
-	class="flex items-center gap-1 text-xs font-mono tooltip tooltip-open tooltip-info tooltip-left tooltip-start cursor-default"
+	class="flex items-center gap-1 text-xs font-mono tooltip tooltip-info tooltip-left tooltip-start cursor-default"
 >
 	{#if !apiwatchStats.isEnabled}
 		<span class="text-faint">

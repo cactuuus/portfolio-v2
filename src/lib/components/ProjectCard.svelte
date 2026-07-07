@@ -37,11 +37,12 @@
 	});
 </script>
 
-<div class="card sm:card-side bg-base-200 overflow-hidden border border-base-content/10 shadow-sm">
-	<div class="relative sm:w-2xs md:w-xs bg-base-content/10 shrink-0">
+<div class="card md:card-side bg-base-200 overflow-hidden border border-base-content/10 shadow-sm">
+	<div class="relative md:w-xs bg-base-content/10 shrink-0">
 		{#if project.previewImage}
 			<figure class="w-full h-full">
 				<img
+					loading="lazy"
 					class="aspect-video object-cover"
 					src={asset(project.previewImage)}
 					alt={project.title}
@@ -107,22 +108,16 @@
 						ownAsset: false
 					}}
 				/>
-				<div class="grow flex justify-end gap-2 items-baseline">
+				<div class="grow flex justify-end gap-2 items-baseline text-xs font-mono">
 					{#if githubStats}
-						<div
-							class="tooltip tooltip-info flex text-2xs items-baseline gap-1"
-							aria-label="GitHub Stars"
-						>
+						<div class="tooltip tooltip-info flex items-baseline gap-1" aria-label="GitHub Stars">
 							<div class="tooltip-content">
 								<span>GitHub Stars</span>
 							</div>
 							<StarIcon class="h-2 w-2" />
 							<span class="pointer-events-none">{githubStats.stars}</span>
 						</div>
-						<div
-							class="tooltip tooltip-info flex text-2xs items-baseline gap-1"
-							aria-label="GitHub Forks"
-						>
+						<div class="tooltip tooltip-info flex items-baseline gap-1" aria-label="GitHub Forks">
 							<div class="tooltip-content">
 								<span>GitHub Forks</span>
 							</div>
@@ -130,7 +125,7 @@
 							<span class="pointer-events-none">{githubStats.forks}</span>
 						</div>
 						<div
-							class="tooltip tooltip-info flex text-2xs items-baseline gap-1"
+							class="tooltip tooltip-info flex items-baseline gap-1"
 							aria-label="Open Issues and Pull Requests"
 						>
 							<div class="tooltip-content max-w-50">
@@ -139,12 +134,12 @@
 							<CircleDotIcon class="h-2 w-2" />
 							<span class="pointer-events-none">{githubStats.openIssuesAndPRs}</span>
 						</div>
-						<span class="text-2xs ml-2">{updatedAtLabel}</span>
+						<span class="ml-2">{updatedAtLabel}</span>
 					{:else if !githubLoaded}
-						<span class="text-2xs animate-pulse">loading...</span>
+						<span class="animate-pulse">loading...</span>
 					{:else}
 						<!-- if loaded and still missing data, show error -->
-						<span class="text-2xs text-error">&lt;failed to load GitHub data&gt;</span>
+						<span class="text-error">&lt;failed to load GitHub data&gt;</span>
 					{/if}
 				</div>
 			</div>

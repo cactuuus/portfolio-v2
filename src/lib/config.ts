@@ -5,6 +5,7 @@
 
 export const GITHUB_USERNAME = 'cactuuus';
 export const LEETCODE_HANDLE = 'user8343Sz';
+export const THIS_REPO_NAME = 'portfolio-v2';
 
 /**
  * The widget ID for the ApiWatch monitor used to track uptime for the portfolio projects.

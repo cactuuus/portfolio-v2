@@ -58,7 +58,7 @@
 	</div>
 
 	<div class="relative">
-		<div class="inline-grid grid-flow-col auto-cols-max gap-8">
+		<div class="w-full inline-grid grid-flow-col md:auto-cols-max md:gap-8">
 			<div class="flex flex-col gap-1">
 				<span class="text-2xs text-faint uppercase">solved</span>
 				<div class="flex items-baseline gap-1">
@@ -71,17 +71,17 @@
 				<span class="text-2xs text-faint uppercase">breakdown</span>
 				<div class="flex items-baseline gap-1">
 					<div class="text-success">
-						<span class="hidden sm:inline">easy</span>
+						<span class="hidden md:inline">easy</span>
 						<span class="text-xl font-semibold">{stats ? stats.solved.easy : '---'}</span>
 					</div>
 					<span class="text-faint">|</span>
 					<div class="text-warning">
-						<span class="hidden sm:inline">med</span>
+						<span class="hidden md:inline">med</span>
 						<span class="text-xl font-semibold">{stats ? stats.solved.medium : '---'}</span>
 					</div>
 					<span class="text-faint">|</span>
 					<div class="text-error">
-						<span class="hidden sm:inline">hard</span>
+						<span class="hidden md:inline">hard</span>
 						<span class="text-xl font-semibold">{stats ? stats.solved.hard : '---'}</span>
 					</div>
 				</div>

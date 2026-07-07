@@ -6,8 +6,7 @@ export const profile: Profile = {
 	name: 'Jacopo Calvi',
 	title: 'Software Developer — University of Sussex',
 	description: [
-		'I build, fix, and occasionally break things.',
-		'Avid Omarchy user (Arch btw), professional cat-holder.'
+		'I build, fix, and occasionally break things. LeetCode enjoyer, Linux enthusiast (Arch btw), and professional cat-holder.'
 	],
 	skills: [
 		'Web Development',

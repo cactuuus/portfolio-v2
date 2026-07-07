@@ -18,46 +18,14 @@
 - [x] Footer
 - [x] ProjectList
 - [x] LeetcodeStats
-- [] GithubStats
-- [] UptimeStatus
+- [x] GithubStats
+- [x] UptimeStatus
 
 ## Interfaces
 
-- [x] Link {
-      icon: string,
-      name: string,
-      url: string
-      openInNewTab: boolean,
-      }
-- [x] Profile {
-      name: string,
-      bio: string,
-      links: Link[]
-      }
-- [x] LeetcodeStats {
-      solved: number,
-      total: number,
-      streak: number,
-      thisYearSolved: number,
-      activity: {
-      date: Date,
-      solved: number
-      }[]
-      }
-- [] GithubStats {
-  // not sure yet, depends on what I can actually fetch (activity, language stats, etc.)
-  }
-- [] UptimeStatus {
-  status: "up" | "down" | "unknown",
-  uptime: number
-  // not sure yet, depends on what I can actually fetch (uptime, response time, etc.)
-  }
-- [x] Project {
-      slug: string,
-      name: string,
-      previewImage?: string,
-      description: string, // using markdown formatting
-      links: Link[]
-      tags: string[],
-      apiwatchId?: string
-      }
+- [x] Link
+- [x] Profile
+- [x] LeetcodeStats
+- [x] GithubStats
+- [x] UptimeStatus
+- [x] Project
