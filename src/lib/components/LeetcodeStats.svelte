@@ -51,15 +51,17 @@
 	}
 </script>
 
-<div class="font-mono bg-base-200 px-4 py-2 rounded-box border border-base-content/10 shadow-sm">
+<div
+	class="font-mono bg-base-200 px-4 py-2 rounded-box border border-base-content/10 shadow-sm w-full overflow-hidden"
+>
 	<div class="flex items-center justify-between gap-2 mb-2">
 		<h4 class="text-lg font-semibold">LeetCode Stats</h4>
 		<NormalLink link={LEETCODE_PROFILE_LINK} />
 	</div>
 
 	<div class="relative">
-		<div class="w-full inline-grid grid-flow-col md:auto-cols-max md:gap-8">
-			<div class="flex flex-col gap-1">
+		<div class="w-full justify-start flex gap-8">
+			<div class="flex flex-col gap-1 flex-1 sm:flex-none">
 				<span class="text-2xs text-faint uppercase">solved</span>
 				<div class="flex items-baseline gap-1">
 					<span class="text-xl font-semibold">{stats ? stats.solved.total : '---'}</span>
@@ -67,7 +69,7 @@
 				</div>
 			</div>
 
-			<div class="flex flex-col gap-1">
+			<div class="hidden sm:flex sm:flex-1 flex-col gap-1">
 				<span class="text-2xs text-faint uppercase">breakdown</span>
 				<div class="flex items-baseline gap-1">
 					<div class="text-success">
