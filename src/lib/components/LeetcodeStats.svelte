@@ -2,7 +2,7 @@
 	import NormalLink from './NormalLink.svelte';
 	import type { LeetcodeStats, Link } from '$lib/types';
 	import { LEETCODE_HANDLE } from '$lib/config';
-	import { toDateString } from '$lib/helpers';
+	import { toDateString, withMinDelay } from '$lib/helpers';
 	import FlameIcon from '~icons/lucide/flame';
 	import MedalIcon from '~icons/lucide/medal';
 
@@ -21,16 +21,9 @@
 	const latestActivity = $derived<LeetcodeStats['activity']>(filledLatestActivity());
 
 	$effect(() => {
-		const startedAt = Date.now();
-		fetch('/api/leetcode')
-			.then((r) => (r.ok ? r.json() : Promise.reject()))
-			.then(async (data: LeetcodeStats) => {
-				const elapsed = Date.now() - startedAt;
-				if (elapsed < MIN_LOADING_TIME) {
-					await new Promise((r) => setTimeout(r, MIN_LOADING_TIME - elapsed));
-				}
-				stats = data;
-			})
+		const promise = fetch('/api/leetcode').then((r) => (r.ok ? r.json() : Promise.reject()));
+		withMinDelay(promise, Date.now(), MIN_LOADING_TIME)
+			.then((data: LeetcodeStats) => (stats = data))
 			.catch(() => (error = true));
 	});
 

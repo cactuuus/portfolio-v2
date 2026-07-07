@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Project, ApiwatchMonitorStats, GithubRepoStats } from '$lib/types';
+	import { withMinDelay } from '$lib/helpers';
 	import ProjectCard from './ProjectCard.svelte';
 
 	let { projects }: { projects: Project[] } = $props();
@@ -7,35 +8,36 @@
 
 	let githubStats = $state<Record<string, GithubRepoStats>>({});
 	let githubLoaded = $state(false);
-
 	let apiwatchStats = $state<Record<string, ApiwatchMonitorStats>>({});
 	let apiwatchLoaded = $state(false);
 
 	$effect(() => {
 		const startedAt = Date.now();
-		fetch('/api/github')
-			.then((r) => (r.ok ? r.json() : Promise.reject()))
-			.then(async (data: Record<string, GithubRepoStats>) => {
-				const elapsed = Date.now() - startedAt;
-				if (elapsed < MIN_LOADING_TIME) {
-					await new Promise((r) => setTimeout(r, MIN_LOADING_TIME - elapsed));
-				}
+		const githubPromise = fetch('/api/github').then((r) => (r.ok ? r.json() : Promise.reject()));
+		const apiwatchPromise = fetch('/api/apiwatch').then((r) =>
+			r.ok ? r.json() : Promise.reject()
+		);
+		withMinDelay(githubPromise, startedAt, MIN_LOADING_TIME)
+			.then((data: Record<string, GithubRepoStats>) => {
 				githubStats = data;
+			})
+			.catch(() => {
+				console.error('Failed to fetch GitHub stats');
+			})
+			.finally(() => {
 				githubLoaded = true;
-			})
-			.catch(() => {});
+			});
 
-		fetch('/api/apiwatch')
-			.then((r) => (r.ok ? r.json() : Promise.reject()))
-			.then(async (data: Record<string, ApiwatchMonitorStats>) => {
-				const elapsed = Date.now() - startedAt;
-				if (elapsed < MIN_LOADING_TIME) {
-					await new Promise((r) => setTimeout(r, MIN_LOADING_TIME - elapsed));
-				}
+		withMinDelay(apiwatchPromise, startedAt, MIN_LOADING_TIME)
+			.then((data: Record<string, ApiwatchMonitorStats>) => {
 				apiwatchStats = data;
-				apiwatchLoaded = true;
 			})
-			.catch(() => {});
+			.catch(() => {
+				console.error('Failed to fetch APIWatch stats');
+			})
+			.finally(() => {
+				apiwatchLoaded = true;
+			});
 	});
 </script>
 

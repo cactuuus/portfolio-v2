@@ -59,3 +59,29 @@ export function relativeTime(dateStr: string): string {
 		return `${years} year${years !== 1 ? 's' : ''} ago`;
 	}
 }
+
+/**
+ * Ensures that a promise takes at least a minimum amount of time to resolve, given a start time and a minimum loading time. If the promise resolves faster than the specified minimum loading time, it will wait for the remaining time before returning it.
+ * @param promise The promise to wait for.
+ * @param startedAt The timestamp (in milliseconds), set externally and used as a reference point for the loading time.
+ * @param minLoadingTime The minimum loading time in milliseconds.
+ * @returns A promise that resolves after the minimum loading time has elapsed.
+ */
+export async function withMinDelay<T>(
+	promise: Promise<T>,
+	startedAt: number,
+	minLoadingTime: number
+): Promise<T> {
+	const waitRemaining = async () => {
+		const timeLeft = minLoadingTime - (Date.now() - startedAt);
+		if (timeLeft > 0) await new Promise((r) => setTimeout(r, timeLeft));
+	};
+	try {
+		const result = await promise;
+		await waitRemaining();
+		return result;
+	} catch (error) {
+		await waitRemaining();
+		throw error;
+	}
+}
