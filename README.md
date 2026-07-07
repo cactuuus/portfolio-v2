@@ -15,17 +15,30 @@
     </a>
 </p>
 
----
+<figure>
+    <img src="./assets/preview.avif" alt="" width="100%" />
+    <figcaption align="center">
+        Preview of the website, showing both light and dark themes.
+        Live at: <a href="https://jacopocalvi.com">jacopocalvi.com</a>
+    </figcaption>
+</figure>
 
-There isn't much more to say. Here is a list of technologies I have used to build it:
+## About
+
+Here is a list of amazing tools I have used:
 
 - [SvelteKit](https://kit.svelte.dev/)
 - [DaisyUI](https://daisyui.com/)
 - [TailwindCSS](https://tailwindcss.com/)
 - [Bun](https://bun.sh/)
 - [Unplugin-Icons](https://github.com/unplugin/unplugin-icons)
+- [Docker](https://www.docker.com/)
+- [Coolify](https://coolify.io/) (for hosting)
 
-It is a bit overkill for a simple portfolio, but I wanted to play around with APIs and make it a bit more interesting than a static page.
+It is a bit overkill for a simple portfolio, but I wanted to play around with APIs and make it a bit more interesting than a simple, static page.
+
+On the server side, it fetches data from external APIs (like GitHub and LeetCode) which is then used to hydrate the page. Because of this, it uses a very small in-memory cache to optimize performance and prevent rate-limiting.
+For this reason, I hosted it on my own server (using [Docker](https://www.docker.com/) and [Coolify](https://coolify.io/)), instead of using some straightforward platform like [Netlify](https://www.netlify.com/), where in-memory caching doesn't make much sense.
 
 ### Forking
 
