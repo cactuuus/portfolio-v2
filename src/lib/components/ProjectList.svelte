@@ -1,17 +1,17 @@
 <script lang="ts">
-	import type { Project, UptimeStatus, GithubRepoStats } from '$lib/types';
+	import type { Project, ApiwatchMonitorStats, GithubRepoStats } from '$lib/types';
 	import ProjectCard from './ProjectCard.svelte';
 
 	let { projects }: { projects: Project[] } = $props();
-	const MIN_LOADING_TIME = 800; // ms
+	const MIN_LOADING_TIME = 300; // ms
 
 	let githubStats = $state<Record<string, GithubRepoStats>>({});
 	let githubLoaded = $state(false);
 
-	let uptimeStats = $state<Record<string, UptimeStatus>>({});
+	let apiwatchStats = $state<Record<string, ApiwatchMonitorStats>>({});
+	let apiwatchLoaded = $state(false);
 
 	$effect(() => {
-		// TODO -- fetch github and api data, inject into project component
 		const startedAt = Date.now();
 		fetch('/api/github')
 			.then((r) => (r.ok ? r.json() : Promise.reject()))
@@ -25,14 +25,17 @@
 			})
 			.catch(() => {});
 
-		// TEMP MOCK DATA FOR APIWATCH
-		projects.forEach(async (project) => {
-			await new Promise((resolve) => setTimeout(resolve, Math.random() * 1000));
-			uptimeStats[project.slug] = {
-				up: Math.random() > 0.5,
-				uptime: Math.floor(Math.random() * 10000) / 100
-			};
-		});
+		fetch('/api/apiwatch')
+			.then((r) => (r.ok ? r.json() : Promise.reject()))
+			.then(async (data: Record<string, ApiwatchMonitorStats>) => {
+				const elapsed = Date.now() - startedAt;
+				if (elapsed < MIN_LOADING_TIME) {
+					await new Promise((r) => setTimeout(r, MIN_LOADING_TIME - elapsed));
+				}
+				apiwatchStats = data;
+				apiwatchLoaded = true;
+			})
+			.catch(() => {});
 	});
 </script>
 
@@ -42,9 +45,10 @@
 		{#each projects as project (project.slug)}
 			<ProjectCard
 				{project}
-				uptimeStatus={uptimeStats[project.slug]}
+				apiwatchStats={apiwatchStats[project.slug]}
 				githubStats={githubStats[project.slug]}
 				{githubLoaded}
+				{apiwatchLoaded}
 			/>
 		{/each}
 	</div>

@@ -1,24 +1,27 @@
 <script lang="ts">
 	import { asset } from '$app/paths';
-	import type { Project, UptimeStatus, GithubRepoStats } from '$lib/types';
+	import type { Project, ApiwatchMonitorStats, GithubRepoStats } from '$lib/types';
 	import { makeGithubUrl, relativeTime } from '$lib/helpers';
 	import { GITHUB_USERNAME } from '$lib/config';
 	import NormalLink from './NormalLink.svelte';
 	import CopyableCommand from './CopyableCommand.svelte';
+	import UptimeStats from './UptimeStats.svelte';
 	import StarIcon from '~icons/lucide/star';
 	import GitForkIcon from '~icons/lucide/git-fork';
 	import CircleDotIcon from '~icons/lucide/circle-dot';
 
 	let {
 		project,
-		uptimeStatus,
 		githubStats,
-		githubLoaded
+		githubLoaded,
+		apiwatchStats,
+		apiwatchLoaded
 	}: {
 		project: Project;
-		uptimeStatus?: UptimeStatus;
 		githubStats?: GithubRepoStats;
 		githubLoaded: boolean;
+		apiwatchStats?: ApiwatchMonitorStats;
+		apiwatchLoaded: boolean;
 	} = $props();
 
 	// Derived state for the "last updated" label, used to handle errors gracefully.
@@ -55,34 +58,15 @@
 			<div class="card-title flex items-center justify-between font-normal">
 				<h4 class="font-mono text-lg font-semibold">{project.title}</h4>
 				<div class="font-mono text-xs">
-					{#if project.apiwatchId}
-						<span class="flex items-center gap-1">
-							{#if uptimeStatus === undefined}
-								<span class="text-faint animate-pulse">
-									<span class="status status-neutral"></span>
-									loading
-								</span>
-							{:else if uptimeStatus?.up}
-								<span class="text-success">
-									<span class="status status-success aura aura-glow"></span> up
-								</span>
-							{:else}
-								<span class="text-error">
-									<span class="status status-error aura aura-glow"></span> down
-								</span>
-							{/if}
-							<span class="text-faint">({uptimeStatus?.uptime ?? '--.--'}%)</span>
-						</span>
-					{:else}
-						<div
-							class="tooltip tooltip-info tooltip-left tooltip-start"
-							aria-label="Uptime tracking is not applicable to this project"
-						>
-							<div class="tooltip-content max-w-60">
-								<span>Uptime tracking is not applicable to this project</span>
-							</div>
-							<span class="text-faint pointer-events-none">N/A</span>
-						</div>
+					{#if project.apiwatchShareToken !== undefined}
+						{#if apiwatchStats}
+							<UptimeStats {apiwatchStats} />
+						{:else if !apiwatchLoaded}
+							<span class="animate-pulse">loading...</span>
+						{:else}
+							<!-- if loaded and still missing data, show error -->
+							<span class="text-error">&lt;failed to load uptime data&gt;</span>
+						{/if}
 					{/if}
 				</div>
 			</div>

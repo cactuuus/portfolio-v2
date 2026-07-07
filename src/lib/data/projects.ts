@@ -13,7 +13,7 @@ export const projects: Project[] = [
 			label: 'fsa-toolkit.jacopocalvi.com',
 			value: 'https://fsa-toolkit.jacopocalvi.com/'
 		},
-		apiwatchId: 'fsa-toolkit',
+		apiwatchShareToken: '6fb0f36e-42be-446c-b995-80dd03cf4c02',
 		ghRepoName: 'FSA-simulator'
 	},
 	{
@@ -35,7 +35,7 @@ export const projects: Project[] = [
 			kind: ProjectAccessKind.COMMAND,
 			value: 'ssh chess.jacopocalvi.com'
 		},
-		apiwatchId: 'chess-sh',
+		apiwatchShareToken: '21c66a87-2e24-434f-9545-991348f3a530',
 		ghRepoName: 'chess-sh'
 	},
 	{
@@ -50,7 +50,7 @@ export const projects: Project[] = [
 			label: 'drip.jacopocalvi.com',
 			value: 'https://drip.jacopocalvi.com/'
 		},
-		apiwatchId: 'drip',
+		apiwatchShareToken: 'c7032910-9fcd-4fa2-92bb-45ca54850319',
 		ghRepoName: 'drip'
 	},
 	{
@@ -65,7 +65,7 @@ export const projects: Project[] = [
 			label: 'mise.jacopocalvi.com',
 			value: 'https://mise.jacopocalvi.com/'
 		},
-		apiwatchId: 'mise-en-place',
+		apiwatchShareToken: '568f793c-2413-4221-b3c2-53ff8f0866de',
 		ghRepoName: 'mise-en-place'
 	},
 	{

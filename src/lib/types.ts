@@ -76,8 +76,8 @@ export type ProjectAccessKind = (typeof ProjectAccessKind)[keyof typeof ProjectA
  * - description: A short description of the project.
  * - tags: An array of tags associated with the project.
  * - access?: The main way to access the project, if applicable.
- * - apiwatchId?: An optional ID for ApiWatch integration.
  * - ghRepoName?: An optional name for GitHub repository integration.
+ * - apiwatchShareToken?: An optional share token for ApiWatch integration.
  */
 export interface Project {
 	slug: string;
@@ -87,8 +87,8 @@ export interface Project {
 	tags: string[];
 	access?: ProjectAccess;
 	// Optional properties for integration with external services
-	apiwatchId?: string;
 	ghRepoName?: string;
+	apiwatchShareToken?: string;
 }
 
 /**
@@ -113,15 +113,34 @@ export interface GithubRepoStats {
 }
 
 /**
- * UptimeStatus defines the data used to represent the uptime status of a service.
- * TODO -- I yet have to figure out what data I want to display here, so this is just a placeholder for now.
- * - up: A boolean indicating if the service is up.
- * - uptime: The uptime percentage of the service.
+ * ApiwatchUptimeStats defines the data used to represent the uptime statistics of a service monitored by ApiWatch.
+ * - shareToken: The share token of the monitor. This the actual ID, but just as good. It is present even if the monitor is not actually shared publicly.
+ * - isEnabled: A boolean indicating if the monitor is currently enabled.
+ * - isShared: A boolean indicating if the monitor is shared (useful to possibly generate a link to its public page).
+ * - createdAt: The date and time the monitor was created.
+ * - lastCheckedAt: The date and time of the last check.
+ * - lastCheckSuccess: A boolean indicating if the last check was successful.
+ * - checkFrequency: The frequency of checks, in seconds.
+ * - uptime: The uptime percentage of the monitor.
+ * - totalChecks: The total number of checks performed by the monitor.
+ * - successCount: The number of successful checks performed by the monitor.
+ * - failureCount: The number of failed checks performed by the monitor.
+ * - avgResponseTime: The average response time of the monitor in milliseconds.
  */
-export interface UptimeStatus {
-	up: boolean;
+export interface ApiwatchMonitorStats {
+	shareToken: string;
+	isEnabled: boolean;
+	isShared: boolean;
+	createdAt: string;
+	checkFrequency: number;
+	lastCheckedAt: string;
+	lastCheckSuccess: boolean;
+	// uptime breakdown stats
 	uptime: number;
-	//...
+	totalChecks: number;
+	successCount: number;
+	failureCount: number;
+	avgResponseTime: number;
 }
 
 /**
