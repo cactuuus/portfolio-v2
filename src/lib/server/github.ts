@@ -2,6 +2,7 @@ import type { GithubRepoStats, Project } from '$lib/types';
 import { projects } from '$lib/data/projects';
 import { GITHUB_USERNAME } from '$lib/config';
 import { getCached, setCached } from './cache';
+import { GITHUB_TOKEN } from '$app/env/private';
 
 // Raw response shape from GitHub's API for a repository
 // https://docs.github.com/en/rest/repos/repos?apiVersion=2026-03-10#get-a-repository
@@ -19,11 +20,13 @@ interface RawGithubResponse {
  * Returns the statistics for all GitHub repositories configured in the projects data, using cached data if available.
  * @returns A promise that resolves to a record mapping project slugs to their corresponding GitHub repository statistics.
  */
-export async function getGithubRepoStats() {
-	// GitHub's API has a rate limit of 60 requests per hour for unauthenticated requests
-	const CACHE_TTL = 20 * 60 * 1000; // 20 mins
+export async function getGithubRepoStats(): Promise<Record<string, GithubRepoStats>> {
+	// Cache TTL is set according to whether a GitHub token is provided:
+	// - 5 minutes if authenticated (rate limit is 5,000 requests per hour).
+	// - 20 minutes if unauthenticated (rate limit is 60 requests per hour).
+	const CACHE_TTL = GITHUB_TOKEN ? 5 * 60 * 1000 : 20 * 60 * 1000;
 
-	// pre-poulate using cache, tracking which repos still need to be fetched
+	// pre-populate using cache, tracking which repos still need to be fetched
 	const toFetch: Project[] = [];
 	const statsMap: Record<string, GithubRepoStats> = {};
 	for (const project of projects) {
@@ -88,10 +91,18 @@ async function fetchGithubRepoStats(username: string, repoName: string): Promise
 		headers: {
 			Accept: 'application/vnd.github+json',
 			'X-GitHub-Api-Version': '2026-03-10',
-			'User-Agent': username
+			'User-Agent': username,
+			...(GITHUB_TOKEN && { Authorization: `Bearer ${GITHUB_TOKEN}` })
 		}
 	});
-	if (!res.ok) throw new Error(`GitHub API fetch failed: ${res.status}`);
+	if (!res.ok) {
+		if (res.status === 401) {
+			console.warn('GitHub token rejected (401) — check if it expired or was revoked');
+		} else if (res.status === 403 && res.headers.get('x-ratelimit-remaining') === '0') {
+			console.warn('GitHub rate limit exhausted (403)');
+		}
+		throw new Error(`GitHub API fetch failed: ${res.status}`);
+	}
 	const data = (await res.json()) as RawGithubResponse;
 	return {
 		stars: data.stargazers_count,
