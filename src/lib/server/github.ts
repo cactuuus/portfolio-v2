@@ -1,4 +1,4 @@
-import type { GithubRepoStats } from '$lib/types';
+import type { GithubRepoStats, Project } from '$lib/types';
 import { projects } from '$lib/data/projects';
 import { GITHUB_USERNAME } from '$lib/config';
 import { getCached, setCached } from './cache';
@@ -17,27 +17,39 @@ interface RawGithubResponse {
 
 /**
  * Returns the statistics for all GitHub repositories configured in the projects data, using cached data if available.
- * Since GitHub's API has a rate limit of 60 requests per hour for unauthenticated requests, this function caches the results for 20 minutes to avoid hitting the limit.
  * @returns A promise that resolves to a record mapping project slugs to their corresponding GitHub repository statistics.
  */
 export async function getGithubRepoStats() {
-	const CACHE_KEY = `github:repos-stats`;
+	// GitHub's API has a rate limit of 60 requests per hour for unauthenticated requests
 	const CACHE_TTL = 20 * 60 * 1000; // 20 mins
 
-	const cached = getCached<Record<string, GithubRepoStats>>(CACHE_KEY);
-	if (cached) return cached;
-
-	const withRepo = projects.filter((project) => project.ghRepoName !== undefined);
-	const repoNames = withRepo.map((project) => project.ghRepoName!);
-	const repoStats = await batchFetchGithubRepoStats(GITHUB_USERNAME, repoNames);
+	// pre-poulate using cache, tracking which repos still need to be fetched
+	const toFetch: Project[] = [];
 	const statsMap: Record<string, GithubRepoStats> = {};
-	for (let i = 0; i < withRepo.length; i++) {
-		const repoStat = repoStats[i];
-		if (repoStat !== null) {
-			statsMap[withRepo[i].slug] = repoStat;
+	for (const project of projects) {
+		if (!project.ghRepoName) continue;
+		const cached = getCached<GithubRepoStats>(repoCacheKey(project.ghRepoName));
+		if (cached) {
+			statsMap[project.slug] = cached;
+		} else {
+			toFetch.push(project);
 		}
 	}
-	setCached(CACHE_KEY, statsMap, CACHE_TTL);
+
+	// if all repos were cached, return early
+	if (toFetch.length === 0) return statsMap;
+
+	// fetch the remaining repos in parallel, and cache the results
+	const repoNames = toFetch.map((project) => project.ghRepoName!);
+	const repoStats = await batchFetchGithubRepoStats(GITHUB_USERNAME, repoNames);
+	for (let i = 0; i < toFetch.length; i++) {
+		const repoStat = repoStats[i];
+		if (repoStat !== null) {
+			statsMap[toFetch[i].slug] = repoStat;
+			// each entry in toFetch is guaranteed to have a ghRepoName
+			setCached(repoCacheKey(toFetch[i].ghRepoName!), repoStat, CACHE_TTL);
+		}
+	}
 	return statsMap;
 }
 
@@ -90,4 +102,13 @@ async function fetchGithubRepoStats(username: string, repoName: string): Promise
 		archived: data.archived,
 		license: data.license ? data.license.name : null
 	};
+}
+
+/**
+ * Generates a cache key for storing GitHub repository statistics in the cache.
+ * @param repoName The name of the repository.
+ * @returns The cache key.
+ */
+function repoCacheKey(repoName: string): string {
+	return `github:repo:${repoName}`;
 }
