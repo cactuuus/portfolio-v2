@@ -1,5 +1,7 @@
 import type { LeetcodeStats } from '$lib/types';
 import { toDateString } from '$lib/helpers';
+import { LEETCODE_HANDLE } from '$lib/config';
+import { getCached, setCached } from './cache';
 
 // Count of problems by difficulty, as returned by LeetCode's API
 interface CountEntry {
@@ -23,18 +25,21 @@ interface RawLeetcodeResponse {
 	};
 }
 
-// GraphQL query to fetch user stats from LeetCode
-const QUERY = `
-    query userStats($handle: String!, $y1: Int!, $y2: Int!) {
-        allQuestionsCount { difficulty count }
-        matchedUser(username: $handle) {
-            submitStats { acSubmissionNum { difficulty count } }
-            badges { displayName }
-            calThis: userCalendar(year: $y1) { submissionCalendar }
-            calLast: userCalendar(year: $y2) { submissionCalendar }
-        }
-    }
-`;
+/**
+ * Fetches the LeetCode statistics for the configured user handle, using cached data if available.
+ * @returns A promise that resolves to the LeetcodeStats object containing the user's statistics.
+ */
+export async function getLeetcodeStats(): Promise<LeetcodeStats> {
+	const CACHE_KEY = `leetcode:${LEETCODE_HANDLE}`;
+	const CACHE_TTL = 10 * 60 * 1000; // 10 mins
+
+	const cached = getCached<LeetcodeStats>(CACHE_KEY);
+	if (cached) return cached;
+
+	const freshStats = await fetchLeetcodeStats(LEETCODE_HANDLE);
+	setCached(CACHE_KEY, freshStats, CACHE_TTL);
+	return freshStats;
+}
 
 /**
  * Fetches the LeetCode statistics for a given user handle.
@@ -42,7 +47,18 @@ const QUERY = `
  * @returns A promise that resolves to the LeetcodeStats object containing the user's statistics.
  * @throws An error if the fetch operation fails or if the response is invalid.
  */
-export async function fetchLeetcodeStats(handle: string): Promise<LeetcodeStats> {
+async function fetchLeetcodeStats(handle: string): Promise<LeetcodeStats> {
+	const QUERY = `
+		query userStats($handle: String!, $y1: Int!, $y2: Int!) {
+			allQuestionsCount { difficulty count }
+			matchedUser(username: $handle) {
+				submitStats { acSubmissionNum { difficulty count } }
+				badges { displayName }
+				calThis: userCalendar(year: $y1) { submissionCalendar }
+				calLast: userCalendar(year: $y2) { submissionCalendar }
+			}
+		}
+	`;
 	const year = new Date().getFullYear();
 	const res = await fetch('https://leetcode.com/graphql', {
 		method: 'POST',
@@ -60,7 +76,7 @@ export async function fetchLeetcodeStats(handle: string): Promise<LeetcodeStats>
  * @returns The parsed LeetcodeStats object.
  * @throws An error if the matched user data is missing from the response.
  */
-export function parseLeetcodeResponse(data: RawLeetcodeResponse['data']): LeetcodeStats {
+function parseLeetcodeResponse(data: RawLeetcodeResponse['data']): LeetcodeStats {
 	if (!data.matchedUser) throw new Error('No matched user in response');
 	const user = data.matchedUser;
 	const count = (arr: CountEntry[], d: CountEntry['difficulty']) => {
