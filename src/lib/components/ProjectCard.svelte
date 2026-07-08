@@ -58,12 +58,12 @@
 		<div>
 			<div class="card-title flex items-center justify-between font-normal">
 				<h4 class="font-mono text-lg font-semibold">{project.title}</h4>
-				<div class="font-mono text-xs">
+				<div class="font-mono text-xs text-faint">
 					{#if project.apiwatchShareToken !== undefined}
 						{#if apiwatchStats}
 							<UptimeStats {apiwatchStats} />
 						{:else if !apiwatchLoaded}
-							<span class="animate-pulse">loading...</span>
+							<span class="animate-pulse">loading uptime data...</span>
 						{:else}
 							<!-- if loaded and still missing data, show error -->
 							<span class="text-error">&lt;failed to load uptime data&gt;</span>
@@ -136,7 +136,7 @@
 						</div>
 						<span class="ml-2">{updatedAtLabel}</span>
 					{:else if !githubLoaded}
-						<span class="animate-pulse">loading...</span>
+						<span class="animate-pulse">loading GitHub data...</span>
 					{:else}
 						<!-- if loaded and still missing data, show error -->
 						<span class="text-error">&lt;failed to load GitHub data&gt;</span>
