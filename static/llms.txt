@@ -1,0 +1,71 @@
+# Jacopo Calvi
+
+> Software developer based in the UK, recent Computer Science graduate from the University of Sussex. Focused on web development, but happy to tinker with many different technologies. LeetCode enjoyer, Linux enthusiast (Arch btw), professional cat-holder.
+
+## About
+
+Jacopo is a software developer focused on web development, working primarily in TypeScript, Go, and Python. He also builds CLI tools and self-hosts his own infrastructure as side projects. He has a VPS running Coolify, which he uses to host several of his projects, including this portfolio, and to monitor and manage them. He is familiar with CI/CD pipelines, has experience with database design, and Cloudflare services (DSN management, S3 buckets, image transformation).
+
+He graduated in 2026 from the University of Sussex, with a First Class Honours degree in Computer Science (83%), and is currently seeking software engineering opportunities. He is happy to work with a variety of technologies, but has a particular interest in web development, and in particular he is a big fan of:
+- SvelteKit and TypeScript.
+- Python (currently very comfortable using Python for LeetCoding, but would love to learn more).
+- Go (currently learning, knows the basics).
+- Laravel/Filament (he used them in the past and enjoyed them).
+
+Before software, he worked as a barista (was obsessed with coffee and latte art in particular) and then moved into coffee production and roasting. Coffee is still a running interest (see Drip below).
+
+Skills: Web Development, CI/CD, Self-Hosting, Database Design, Python, TypeScript, Go.
+
+- [GitHub](https://github.com/cactuuus)
+- [LinkedIn](https://www.linkedin.com/in/jacopocalvi/)
+- [Resume](https://jacopocalvi.com/resume.pdf)
+- [LeetCode](https://leetcode.com/u/user8343Sz/)
+
+## Projects
+
+### FSA Toolkit (final year project)
+A finite state automata editor and simulator that runs entirely in the browser. Supports multiple types of automata, and has plenty quality of life features (saving/loading, undo/redo, conversion between types, etc.). It focuses strongly on polished UI and UX, while being lightweight and fast.
+
+Tags: SvelteKit, TypeScript, DaisyUI, Automata, Finite State Machines, Online Editor, Education
+- [Live Demo](https://fsa-toolkit.jacopocalvi.com/)
+- [Source Code](https://github.com/cactuuus/FSA-simulator)
+
+### Leet
+A Go CLI for practicing LeetCode problems locally, using your own editor instead of the LeetCode web interface. This is simply a personal utility, to allow practicing LeetCode problems in a more comfortable environment and avoid the 'clunky' LeetCode web interface. It supports fetching problems, running tests, and submitting solutions, and provides a fair amount of customization options.
+It makes use of template files to allow users to customize the code snippets generated for each problem (such as adding common imports or helper functions to wrap around the snippet, that will be ignored when testing/submitting the solution to LeetCode).
+
+Tags: Go, Terminal, CLI, LeetCode
+- Install: `go install github.com/cactuuus/leet@latest`
+- [Source Code](https://github.com/cactuuus/leet)
+
+### Chess-sh
+Multiplayer chess playable entirely in terminal, over SSH. It requires no installation, nor sign-up, and instead uses the user's SSH public key for authentication. It was built to get a taste of Go, and because the idea of an SSH game sounded fun and unique. The user can matchmake against other opponents, or play against bots of various difficulty (using Stockfish).
+
+Tags: Go, SSH, SQLite, Multiplayer, Terminal, CLI, Chess
+- Play: `ssh chess.jacopocalvi.com`
+- [Source Code](https://github.com/cactuuus/chess-sh)
+
+### Drip
+A 3D coffee-themed site built for a university module. The project is very simple in terms of stack used, focusing instead on creating various 3D models and animations, and implementing them in a web environment. These models were created using Blender, then rendered in browser using Three.js.
+
+Tags: TypeScript, Three.js, Blender, 3D-Modelling, Coffee
+- [Live Demo](https://drip.jacopocalvi.com/)
+- [Source Code](https://github.com/cactuuus/drip)
+
+### Mise en Place
+A recipe manager that imports and organizes recipes from other sites, built to practice Laravel, Filament, Vue, and CRUD operations. The inspiration came from the need to organize a large collection of bookmarked recipes in a more efficient and enjoyable manner. It uses a SQLite database, and an R2 bucket for storage (recipe images and backup snapshots), and finally relies on Cloudflare's image transformation for efficient image serving.
+
+Tags: Laravel, PHP, Filament, Vue, SQLite, CRUD, Recipes, Food
+- [Live Demo](https://mise.jacopocalvi.com/)
+- [Source Code](https://github.com/cactuuus/mise-en-place)
+
+### Rick's Ranch
+A short retro shooter with deliberately unpredictable controls, built for HackSussex GameJam 2023. In this event, it won "Most Unconventional Controls" and "Best Overall". Originally built in Unity/C#, later remastered in Godot, in an attempt to fix all of the bugs that plagued the original version.
+
+Tags: Godot, C#, Retro, Shooter, GameJam
+- [Play on itch.io](https://cactuuus.itch.io/ricks-ranch-remastered/)
+- [Source Code](https://github.com/cactuuus/ricks-ranch-remastered)
+
+## Site
+
+This portfolio itself is open source: [portfolio-v2](https://github.com/cactuuus/portfolio-v2), built using SvelteKit, TypeScript, and DaisyUI.
