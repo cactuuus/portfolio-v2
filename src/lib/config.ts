@@ -4,7 +4,7 @@
  */
 
 export const GITHUB_USERNAME = 'cactuuus';
-export const LEETCODE_HANDLE = 'user8343Sz';
+export const LEETCODE_HANDLE = 'cactuuus';
 export const THIS_REPO_NAME = 'portfolio-v2';
 
 /**

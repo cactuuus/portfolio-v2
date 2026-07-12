@@ -19,7 +19,7 @@ Skills: Web Development, CI/CD, Self-Hosting, Database Design, Python, TypeScrip
 - [GitHub](https://github.com/cactuuus)
 - [LinkedIn](https://www.linkedin.com/in/jacopocalvi/)
 - [Resume](https://jacopocalvi.com/resume.pdf)
-- [LeetCode](https://leetcode.com/u/user8343Sz/)
+- [LeetCode](https://leetcode.com/u/cactuuus/)
 
 ## Projects
 
