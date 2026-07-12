@@ -73,7 +73,7 @@ export const projects: Project[] = [
 		title: "Rick's Ranch",
 		previewImage: '/projects/ricks-ranch.avif',
 		description:
-			'A fun and short retro shooter, with unpredictable controls. Initially developed in Unity (C#) for HackSussex’s GameJam (2023), where it won in two categories: “most unconventional controls” & “best overall”. I leter remastered it using Godot.',
+			'A fun and short retro shooter, with unpredictable controls. Initially developed in Unity (C#) for HackSussex’s GameJam (2023), where it won in two categories: “most unconventional controls” & “best overall”. I later remastered it using Godot.',
 		tags: ['Godot', 'GameJam', 'Retro Shooter'],
 		access: {
 			kind: ProjectAccessKind.LINK,
