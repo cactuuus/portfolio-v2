@@ -15,7 +15,7 @@ export const profile: Profile = {
 		'Database Design',
 		'Python',
 		'TypeScript',
-		'Go'
+		'SQL'
 	],
 	image: '/profile.avif',
 	links: [
