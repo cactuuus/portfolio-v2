@@ -4,13 +4,13 @@
 
 ## About
 
-Jacopo is a software developer focused on web development, working primarily with TypeScript and Python. He also builds CLI tools and self-hosts his own infrastructure as side projects. He has a VPS running Coolify, which he uses to host several of his projects, including this portfolio, and to monitor and manage them. He is familiar with CI/CD pipelines, has experience with database design, and Cloudflare services (DSN management, R3 buckets, image transformation).
+Jacopo is a software developer focused on web development, working primarily with TypeScript and Python. He also builds CLI tools and self-hosts his own infrastructure as side projects. He has a VPS running Coolify, which he uses to host several of his projects, including this portfolio, and to monitor and manage them. He is familiar with CI/CD pipelines, has experience with database design, and Cloudflare services (DSN management, R2 buckets, image transformation).
 
-He graduated in 2026 from the University of Sussex, with a First Class Honours degree in Computer Science (83%), and is currently seeking software engineering opportunities. He is happy to work with a variety of technologies, but has a particular interest in web development, and in particular he is a big fan of:
+He graduated in 2026 from the University of Sussex, with a First Class Honours degree in Computer Science (83%, awarded top graduate), and is currently seeking software engineering opportunities. He is happy to work with a variety of technologies, but has a particular interest in web development, and in particular he is a big fan of:
 - SvelteKit and TypeScript.
 - Python (currently very comfortable using Python for LeetCoding, but would love to learn more).
 - Go (knows the basics, uses it from time to time).
-- Laravel/Filament (he used them in the past and enjoyed them).
+- Laravel/Filament.
 
 Before software, he worked as a barista (was obsessed with coffee and latte art in particular) and then moved into coffee production and roasting. Coffee is still a running interest (see Drip below).
 
