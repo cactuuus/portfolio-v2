@@ -2,6 +2,19 @@ import { ProjectAccessKind, type Project } from '$lib/types';
 
 export const projects: Project[] = [
 	{
+		slug: 'sonar',
+		title: 'Sonar [WORK IN PROGRESS]',
+		previewImage: '/projects/sonar.avif',
+		description:
+			'An uptime monitor, built to keep an eye on all of my projects. Currently in private beta. Public release planned once proven reliable.',
+		tags: ['Laravel', 'Filament', 'SQLite', 'Uptime Monitor'],
+		access: {
+			kind: ProjectAccessKind.LINK,
+			label: 'sonar.jacopocalvi.com',
+			value: 'https://sonar.jacopocalvi.com'
+		}
+	},
+	{
 		slug: 'fsa-toolkit',
 		title: 'FSA Toolkit',
 		previewImage: '/projects/fsa-toolkit.avif',
