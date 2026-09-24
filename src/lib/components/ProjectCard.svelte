@@ -90,9 +90,11 @@
 			</div>
 		</div>
 
-		<p class="text-sm text-base-content/80 mb-1">{project.description}</p>
+		<p class="text-sm text-base-content/80 mb-1 grow-0">
+			{project.description}
+		</p>
 
-		<div class="flex gap-2 flex-wrap mb-1">
+		<div class="flex gap-2 flex-wrap mb-1 grow">
 			{#each project.tags as tag (tag)}
 				<span class="badge badge-neutral badge-sm">{tag}</span>
 			{/each}
