@@ -139,7 +139,6 @@ export type UptimeStatus = (typeof UptimeStatuses)[keyof typeof UptimeStatuses];
 /**
  * UptimeStats defines the data used to represent the uptime statistics of a service.
  * - provider: The provider of the uptime monitoring service.
- * - monitorId: The ID of the monitor used to track the service.
  * - status: The status of the service.
  * - checkFrequency: The frequency of checks, in seconds.
  * - lastCheckedAt: The date and time of the last check.
@@ -151,7 +150,6 @@ export type UptimeStatus = (typeof UptimeStatuses)[keyof typeof UptimeStatuses];
  */
 export interface UptimeStats {
 	provider: UptimeProvider;
-	monitorId: string;
 	status: UptimeStatus;
 	checkFrequency: number;
 	lastCheckedAt: string;

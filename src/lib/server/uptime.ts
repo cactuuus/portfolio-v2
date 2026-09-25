@@ -130,7 +130,6 @@ async function fetchSonarMonitorStats(monitorId: string): Promise<UptimeStats> {
 	const data = (await res.json()) as RawSonarMonitorResponse;
 	return {
 		provider: UptimeProviders.SONAR,
-		monitorId: data.monitor.public_id,
 		status: data.monitor.status,
 		checkFrequency: data.monitor.frequencySeconds,
 		lastCheckedAt: data.monitor.lastCheckedAt,
@@ -177,7 +176,6 @@ async function fetchApiWatchMonitorStats(monitorId: string): Promise<UptimeStats
 
 			return {
 				provider: UptimeProviders.APIWATCH,
-				monitorId: monitor.monitor.share_token,
 				status: uptimeStatus,
 				checkFrequency: monitor.monitor.check_frequency_seconds,
 				lastCheckedAt: monitor.monitor.last_checked_at,
