@@ -77,7 +77,7 @@ export type ProjectAccessKind = (typeof ProjectAccessKind)[keyof typeof ProjectA
  * - tags: An array of tags associated with the project.
  * - access?: The main way to access the project, if applicable.
  * - ghRepoName?: An optional name for GitHub repository integration.
- * - apiwatchShareToken?: An optional share token for ApiWatch integration.
+ * - uptimeData?: An optional data structure for Uptime integration.
  */
 export interface Project {
 	slug: string;
@@ -88,7 +88,10 @@ export interface Project {
 	access?: ProjectAccess;
 	// Optional properties for integration with external services
 	ghRepoName?: string;
-	apiwatchShareToken?: string;
+	uptimeData?: {
+		provider: UptimeProvider;
+		monitorId: string;
+	};
 }
 
 /**
@@ -113,29 +116,45 @@ export interface GithubRepoStats {
 }
 
 /**
- * ApiwatchUptimeStats defines the data used to represent the uptime statistics of a service monitored by ApiWatch.
- * - shareToken: The share token of the monitor. This the actual ID, but just as good. It is present even if the monitor is not actually shared publicly.
- * - isEnabled: A boolean indicating if the monitor is currently enabled.
- * - isShared: A boolean indicating if the monitor is shared (useful to possibly generate a link to its public page).
- * - createdAt: The date and time the monitor was created.
- * - lastCheckedAt: The date and time of the last check.
- * - lastCheckSuccess: A boolean indicating if the last check was successful.
- * - checkFrequency: The frequency of checks, in seconds.
- * - uptime: The uptime percentage of the monitor.
- * - totalChecks: The total number of checks performed by the monitor.
- * - successCount: The number of successful checks performed by the monitor.
- * - failureCount: The number of failed checks performed by the monitor.
- * - avgResponseTime: The average response time of the monitor in milliseconds.
+ * Types of uptime monitoring providers. Simply used to avoid magic strings in the codebase.
  */
-export interface ApiwatchMonitorStats {
-	shareToken: string;
-	isEnabled: boolean;
-	isShared: boolean;
-	createdAt: string;
+export const UptimeProviders = {
+	SONAR: 'Sonar',
+	APIWATCH: 'ApiWatch'
+} as const;
+export type UptimeProvider = (typeof UptimeProviders)[keyof typeof UptimeProviders];
+
+/**
+ * Types of uptime status. Simply used to avoid magic strings in the codebase.
+ */
+export const UptimeStatuses = {
+	UP: 'up',
+	DOWN: 'down',
+	PAUSED: 'paused',
+	PENDING: 'pending',
+	UNKNOWN: 'unknown'
+} as const;
+export type UptimeStatus = (typeof UptimeStatuses)[keyof typeof UptimeStatuses];
+
+/**
+ * UptimeStats defines the data used to represent the uptime statistics of a service.
+ * - provider: The provider of the uptime monitoring service.
+ * - monitorId: The ID of the monitor used to track the service.
+ * - status: The status of the service.
+ * - checkFrequency: The frequency of checks, in seconds.
+ * - lastCheckedAt: The date and time of the last check.
+ * - uptime: The uptime percentage of the service.
+ * - totalChecks: The total number of checks performed by the service.
+ * - successCount: The number of successful checks performed by the service.
+ * - failureCount: The number of failed checks performed by the service.
+ * - avgResponseTime: The average response time of the service in milliseconds.
+ */
+export interface UptimeStats {
+	provider: UptimeProvider;
+	monitorId: string;
+	status: UptimeStatus;
 	checkFrequency: number;
 	lastCheckedAt: string;
-	lastCheckSuccess: boolean;
-	// uptime breakdown stats
 	uptime: number;
 	totalChecks: number;
 	successCount: number;

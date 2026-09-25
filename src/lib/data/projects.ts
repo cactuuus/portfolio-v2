@@ -1,4 +1,11 @@
-import { ProjectAccessKind, type Project } from '$lib/types';
+import { ProjectAccessKind, UptimeProviders, type Project } from '$lib/types';
+import {
+	SONAR_UPTIME_ID,
+	FSA_UPTIME_ID,
+	CHESS_SH_UPTIME_ID,
+	DRIP_UPTIME_ID,
+	MISE_UPTIME_ID
+} from '$app/env/public';
 
 export const projects: Project[] = [
 	{
@@ -12,6 +19,10 @@ export const projects: Project[] = [
 			kind: ProjectAccessKind.LINK,
 			label: 'sonar.jacopocalvi.com',
 			value: 'https://sonar.jacopocalvi.com'
+		},
+		uptimeData: {
+			provider: UptimeProviders.APIWATCH,
+			monitorId: SONAR_UPTIME_ID
 		}
 	},
 	{
@@ -26,7 +37,10 @@ export const projects: Project[] = [
 			label: 'fsa-toolkit.jacopocalvi.com',
 			value: 'https://fsa-toolkit.jacopocalvi.com/'
 		},
-		apiwatchShareToken: '6fb0f36e-42be-446c-b995-80dd03cf4c02',
+		uptimeData: {
+			provider: UptimeProviders.SONAR,
+			monitorId: FSA_UPTIME_ID
+		},
 		ghRepoName: 'FSA-simulator'
 	},
 	{
@@ -48,7 +62,10 @@ export const projects: Project[] = [
 			kind: ProjectAccessKind.COMMAND,
 			value: 'ssh chess.jacopocalvi.com'
 		},
-		apiwatchShareToken: '21c66a87-2e24-434f-9545-991348f3a530',
+		uptimeData: {
+			provider: UptimeProviders.APIWATCH,
+			monitorId: CHESS_SH_UPTIME_ID
+		},
 		ghRepoName: 'chess-sh'
 	},
 	{
@@ -63,7 +80,10 @@ export const projects: Project[] = [
 			label: 'drip.jacopocalvi.com',
 			value: 'https://drip.jacopocalvi.com/'
 		},
-		apiwatchShareToken: 'c7032910-9fcd-4fa2-92bb-45ca54850319',
+		uptimeData: {
+			provider: UptimeProviders.SONAR,
+			monitorId: DRIP_UPTIME_ID
+		},
 		ghRepoName: 'drip'
 	},
 	{
@@ -78,7 +98,10 @@ export const projects: Project[] = [
 			label: 'mise.jacopocalvi.com',
 			value: 'https://mise.jacopocalvi.com/'
 		},
-		apiwatchShareToken: '568f793c-2413-4221-b3c2-53ff8f0866de',
+		uptimeData: {
+			provider: UptimeProviders.SONAR,
+			monitorId: MISE_UPTIME_ID
+		},
 		ghRepoName: 'mise-en-place'
 	},
 	{

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Project, ApiwatchMonitorStats, GithubRepoStats } from '$lib/types';
+	import type { Project, UptimeStats, GithubRepoStats } from '$lib/types';
 	import { withMinDelay } from '$lib/helpers';
 	import ProjectCard from './ProjectCard.svelte';
 
@@ -8,15 +8,13 @@
 
 	let githubStats = $state<Record<string, GithubRepoStats>>({});
 	let githubLoaded = $state(false);
-	let apiwatchStats = $state<Record<string, ApiwatchMonitorStats>>({});
-	let apiwatchLoaded = $state(false);
+	let uptimeStats = $state<Record<string, UptimeStats>>({});
+	let uptimeLoaded = $state(false);
 
 	$effect(() => {
 		const startedAt = Date.now();
 		const githubPromise = fetch('/api/github').then((r) => (r.ok ? r.json() : Promise.reject()));
-		const apiwatchPromise = fetch('/api/apiwatch').then((r) =>
-			r.ok ? r.json() : Promise.reject()
-		);
+		const uptimePromise = fetch('/api/uptime').then((r) => (r.ok ? r.json() : Promise.reject()));
 		withMinDelay(githubPromise, startedAt, MIN_LOADING_TIME)
 			.then((data: Record<string, GithubRepoStats>) => {
 				githubStats = data;
@@ -28,15 +26,15 @@
 				githubLoaded = true;
 			});
 
-		withMinDelay(apiwatchPromise, startedAt, MIN_LOADING_TIME)
-			.then((data: Record<string, ApiwatchMonitorStats>) => {
-				apiwatchStats = data;
+		withMinDelay(uptimePromise, startedAt, MIN_LOADING_TIME)
+			.then((data: Record<string, UptimeStats>) => {
+				uptimeStats = data;
 			})
 			.catch(() => {
 				console.error('Failed to fetch APIWatch stats');
 			})
 			.finally(() => {
-				apiwatchLoaded = true;
+				uptimeLoaded = true;
 			});
 	});
 </script>
@@ -47,10 +45,10 @@
 		{#each projects as project (project.slug)}
 			<ProjectCard
 				{project}
-				apiwatchStats={apiwatchStats[project.slug]}
+				uptimeStats={uptimeStats[project.slug]}
 				githubStats={githubStats[project.slug]}
 				{githubLoaded}
-				{apiwatchLoaded}
+				{uptimeLoaded}
 			/>
 		{/each}
 	</div>
