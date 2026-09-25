@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { asset } from '$app/paths';
-	import type { Project, ApiwatchMonitorStats, GithubRepoStats } from '$lib/types';
+	import type { Project, UptimeStats, GithubRepoStats } from '$lib/types';
 	import { makeGithubUrl, relativeTime } from '$lib/helpers';
 	import { GITHUB_USERNAME } from '$lib/config';
 	import NormalLink from './NormalLink.svelte';
 	import CopyableCommand from './CopyableCommand.svelte';
-	import UptimeStats from './UptimeStats.svelte';
+	import UptimeStatsComponent from './UptimeStats.svelte';
 	import StarIcon from '~icons/lucide/star';
 	import GitForkIcon from '~icons/lucide/git-fork';
 	import CircleDotIcon from '~icons/lucide/circle-dot';
@@ -14,14 +14,14 @@
 		project,
 		githubStats,
 		githubLoaded,
-		apiwatchStats,
-		apiwatchLoaded
+		uptimeStats,
+		uptimeLoaded
 	}: {
 		project: Project;
 		githubStats?: GithubRepoStats;
 		githubLoaded: boolean;
-		apiwatchStats?: ApiwatchMonitorStats;
-		apiwatchLoaded: boolean;
+		uptimeStats?: UptimeStats;
+		uptimeLoaded: boolean;
 	} = $props();
 
 	// Derived state for the "last updated" label, used to handle errors gracefully.
@@ -59,10 +59,10 @@
 			<div class="card-title flex items-center justify-between font-normal">
 				<h4 class="font-mono text-lg font-semibold">{project.title}</h4>
 				<div class="font-mono text-xs text-faint">
-					{#if project.apiwatchShareToken !== undefined}
-						{#if apiwatchStats}
-							<UptimeStats {apiwatchStats} />
-						{:else if !apiwatchLoaded}
+					{#if project.uptimeData !== undefined}
+						{#if uptimeStats}
+							<UptimeStatsComponent {uptimeStats} />
+						{:else if !uptimeLoaded}
 							<span class="animate-pulse">loading uptime data...</span>
 						{:else}
 							<!-- if loaded and still missing data, show error -->
@@ -90,9 +90,11 @@
 			</div>
 		</div>
 
-		<p class="text-sm text-base-content/80 mb-1">{project.description}</p>
+		<p class="text-sm text-base-content/80 mb-1 grow-0">
+			{project.description}
+		</p>
 
-		<div class="flex gap-2 flex-wrap mb-1">
+		<div class="flex gap-2 flex-wrap mb-1 grow">
 			{#each project.tags as tag (tag)}
 				<span class="badge badge-neutral badge-sm">{tag}</span>
 			{/each}
