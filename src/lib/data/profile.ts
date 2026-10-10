@@ -30,12 +30,6 @@ export const profile: Profile = {
 			url: `https://www.linkedin.com/in/jacopocalvi/`,
 			ownAsset: false,
 			newTab: true
-		},
-		{
-			label: 'Resume.pdf',
-			url: '/resume.pdf',
-			ownAsset: true,
-			newTab: true
 		}
 	]
 };

@@ -48,4 +48,4 @@ Shoot me a message if you have any questions!
 
 ### License
 
-The code is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. This of course does not apply to personal content (such as name, bio, resume, photos, project descriptions), which is not covered and remains mine.
+The code is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. This of course does not apply to personal content (such as name, bio, photos, project descriptions), which is not covered and remains mine.
