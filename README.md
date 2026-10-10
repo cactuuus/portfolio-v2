@@ -4,12 +4,12 @@
 </div>
 
 <p align="center">
-    <a href="https://jacopocalvi.com">
+    <span>
         <img src="https://img.shields.io/badge/self--hosted-blueviolet?logo=coolify" alt="Website" />
-    </a>
-    <a href="https://apiwatch.eu/status/6fb0f36e-42be-446c-b995-80dd03cf4c02">
+    </span>
+    <span>
         <img src="https://img.shields.io/website?url=https://jacopocalvi.com/health&label=status&up_message=online&up_color=brightgreen&down_message=offline&down_color=red" alt="Status" />
-    </a>
+    </span>
     <a href="LICENSE">
         <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" />
     </a>
