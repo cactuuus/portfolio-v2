@@ -1,11 +1,5 @@
 import { ProjectAccessKind, UptimeProviders, type Project } from '$lib/types';
-import {
-	SONAR_UPTIME_ID,
-	FSA_UPTIME_ID,
-	CHESS_SH_UPTIME_ID,
-	DRIP_UPTIME_ID,
-	MISE_UPTIME_ID
-} from '$app/env/public';
+import { FSA_UPTIME_ID, DRIP_UPTIME_ID, MISE_UPTIME_ID } from '$app/env/public';
 
 export const projects: Project[] = [
 	{
@@ -19,10 +13,6 @@ export const projects: Project[] = [
 			kind: ProjectAccessKind.LINK,
 			label: 'sonar.jacopocalvi.com',
 			value: 'https://sonar.jacopocalvi.com'
-		},
-		uptimeData: {
-			provider: UptimeProviders.APIWATCH,
-			monitorId: SONAR_UPTIME_ID
 		}
 	},
 	{
@@ -61,10 +51,6 @@ export const projects: Project[] = [
 		access: {
 			kind: ProjectAccessKind.COMMAND,
 			value: 'ssh chess.jacopocalvi.com'
-		},
-		uptimeData: {
-			provider: UptimeProviders.APIWATCH,
-			monitorId: CHESS_SH_UPTIME_ID
 		},
 		ghRepoName: 'chess-sh'
 	},

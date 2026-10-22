@@ -15,12 +15,6 @@ export const variables = defineEnvVars({
 		schema: v.optional(v.string())
 	},
 
-	APIWATCH_MONITORS_WIDGET_ID: {
-		description:
-			'The widget ID for the ApiWatch monitor used to track uptime for the portfolio projects.',
-		schema: v.optional(v.string())
-	},
-
 	// Public IDs for the monitored services.
 
 	SONAR_UPTIME_ID: {

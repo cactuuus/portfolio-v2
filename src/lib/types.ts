@@ -119,8 +119,7 @@ export interface GithubRepoStats {
  * Types of uptime monitoring providers. Simply used to avoid magic strings in the codebase.
  */
 export const UptimeProviders = {
-	SONAR: 'Sonar',
-	APIWATCH: 'ApiWatch'
+	SONAR: 'Sonar'
 } as const;
 export type UptimeProvider = (typeof UptimeProviders)[keyof typeof UptimeProviders];
 

@@ -31,7 +31,7 @@
 				uptimeStats = data;
 			})
 			.catch(() => {
-				console.error('Failed to fetch APIWatch stats');
+				console.error('Failed to fetch uptime stats');
 			})
 			.finally(() => {
 				uptimeLoaded = true;
