@@ -4,7 +4,7 @@ import { makeGithubUrl } from '$lib/helpers';
 
 export const profile: Profile = {
 	name: 'Jacopo Calvi',
-	title: 'Software Developer — University of Sussex',
+	title: 'Tech Enthusiast — UK based',
 	description: [
 		'I build, fix, and occasionally break things. LeetCode enjoyer, Linux enthusiast (Arch btw), and professional cat-holder.'
 	],
