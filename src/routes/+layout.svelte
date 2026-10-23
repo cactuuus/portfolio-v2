@@ -5,9 +5,9 @@
 
 	let { children } = $props();
 
-	const title = 'Jacopo Calvi — Software Developer';
+	const title = 'Jacopo Calvi';
 	const description =
-		'Software developer, graduated from the University of Sussex with a First Class Honours degree in Computer Science. I tinker with many different technologies, with particular focus on web development.';
+		'Tech enthusiast, graduated from the University of Sussex with a First Class Honours degree in Computer Science. I tinker with many different technologies, with particular focus on web development.';
 </script>
 
 <svelte:head>
